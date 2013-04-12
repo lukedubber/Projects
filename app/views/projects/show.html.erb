@@ -1,0 +1,94 @@
+<%
+#  require 'base64'
+#  require 'open-uri'
+#  require 'json'
+#  def git_repo(repo) return JSON.parse(open("https://api.github.com/repos/lukedubber/"+repo).read) end
+#  def git_repo_commits(repo)  return JSON.parse(open("https://api.github.com/repos/lukedubber/"+repo+"/commits").read) end
+#  def git_repo_readme(repo)  return JSON.parse(open("https://api.github.com/repos/lukedubber/"+repo+"/readme").read) end
+
+#  repo = git_repo(@project.repo) if(@project.repo)
+#  repo_commits = git_repo_commits(@project.repo) if(@project.repo)
+#  repo_readme = git_repo_readme(@project.repo) if(@project.repo)
+#require 'octokit'
+ #repo = Octokit.repo("lukedubber/"+@project.repo) if(@project.repo)
+#abort(debug(Octokit.user.repo("lukedubber/"+@project.repo))
+
+Octokit.netrc = "/www/docs/lukedubber.com/.netrc"  if(@project.repo)
+Octokit.user if(@project.repo)
+repo = Octokit.repo("lukedubber/"+@project.repo) if(@project.repo) 
+#abort(debug(repo)) if(@project.repo)
+%>
+<%= debug(Octokit.ratelimit_remaining)  if(@project.repo)%>
+<p id="notice"><%= notice %></p>
+<p>
+  <b>Title:</b>
+  <%= @project.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @project.content %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @project.status %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @project.category %>
+</p>
+
+<p>
+  <b>Show:</b>
+  <%= @project.show %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= link_to @project.url, @project.url %>
+</p>
+<% if(@project.repo)%>
+<p>
+  <b>Repo:</b>
+  <%= link_to @project.repo, repo[:html_url] %>
+</p>
+<p>
+  <b>Repo Description:</b>
+  <%= repo[:description] %>
+</p>
+<div class="well well-small">
+<p>
+  <b>Repo Readme:</b>
+  <%#= raw Base64.decode64(@repo_readme["content"]) %>
+  <%= raw Octokit.contents  "lukedubber/"+@project.repo, :path => 'README.md', :accept => 'application/vnd.github.v3.html' %>
+</p>
+</div>
+<% end %>
+<p>
+  <b>Platform:</b>
+  <%= @project.platform %>
+</p>
+<p>
+  <b>Language:</b>
+  <%= @project.language %>
+</p>
+<p>
+  <b>Technologies Used:</b>
+  <%= @project.technologies_used %>
+</p>
+ <% if(@project.repo)%>
+<p>
+  <b>Repo Info:</b>
+  <%#=debug(repo) %>
+</p>
+<% end%> 
+
+
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %> | 
+<%= link_to 'Updates', project_updates_path(@project) %> | 
+<%= link_to 'New Update', new_project_update_path(@project) %>
+Page Rendered in <%= sprintf('%.3f', (Time.now.usec - @start_time).abs / 1000000.0) %> seconds

@@ -1,0 +1,29 @@
+<h1>Listing updates</h1>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Date</th>
+    <th>Project</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @updates.each do |update| %>
+  <tr>
+    <td><%= update.title %></td>
+    <td><%= update.content %></td>
+    <td><%= update.date %></td>
+    <td><%= update.project.title %></td>
+    <td><%= link_to 'Show', project_update_path(:id => update.id) %></td>
+    <td><%= link_to 'Edit', edit_project_update_path(:id => update.id) %></td>
+    <td><%= link_to 'Destroy', project_update_path(:id => update.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+<%= link_to 'New Update', new_project_update_path %>

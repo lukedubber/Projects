@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <b>Project:</b>
+  <%= @update.project.title %>
+</p>
+<p>
+  <b>Update Title:</b>
+  <%= @update.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @update.content %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @update.date %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_project_update_path(:id => @update.id) %> |
+<%= link_to 'Back', project_updates_path %>

@@ -1,0 +1,16 @@
+		<% status = "" %>
+<% @project = Project.new() if !@project %> 
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><%= link_to "Projects", root_url %></li>
+		<% @projects.each do |project| %> 
+		<% if status != project.status %>
+		 <li  class="nav-header"><%=project.status%>
+		<%
+			status = project.status
+		end
+		%>
+		<li class="<%= "active" if project.id == @project.id %>" ><%= link_to project.title, project %></li>
+		<% end %>
+            </ul>
+          </div><!--/.well -->

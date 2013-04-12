@@ -1,0 +1,20 @@
+  <% @updates.each do |update| %> 
+    <div class="well well-small">
+      <h4>Project update: <%= link_to update.project.title, project_path(:id => update.project.id) %>, <%= update.date%><%#= link_to update.title, update %></li></h4>
+      <h5><%= update.title %></h5>
+      <%= update.content%>
+    </div><!--/.well -->
+  <% end %>
+<% if @updates_count > 5 %>
+<div class="pagination">
+  <ul>
+    
+<% if(params[:offset] && params[:offset].to_i != 0) %>
+	<li><a href="/?offset=<%= (params[:offset].to_i-@offset_increment)%>">«</a></li>
+<% end %>
+<% if(params[:offset].to_i+@offset_increment <= @updates_count) %>
+	<li><a href="/?offset=<%= (params[:offset].to_i+@offset_increment)%>">»</a></li>
+<% end %>
+  </ul>
+</div>
+<% end %>
